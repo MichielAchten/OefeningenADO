@@ -17,7 +17,7 @@ namespace AdoGemeenschap
         {
             var conTuincentrum = factory.CreateConnection();
             conTuincentrum.ConnectionString = conTuincentrumSetting.ConnectionString;
-            return conTuincentrum; ;
+            return conTuincentrum; 
         }
     }
 }
