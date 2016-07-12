@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OefeningenADO", "OefeningenADO\OefeningenADO.csproj", "{58BAEB20-521F-4254-8E57-254C275CA3E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoWPF", "OefeningenADO\AdoWPF.csproj", "{58BAEB20-521F-4254-8E57-254C275CA3E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoGemeenschap", "AdoGemeenschap\AdoGemeenschap.csproj", "{C5D018B9-7952-4CA1-A7DD-5E57F90E8DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5D018B9-7952-4CA1-A7DD-5E57F90E8DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D018B9-7952-4CA1-A7DD-5E57F90E8DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D018B9-7952-4CA1-A7DD-5E57F90E8DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D018B9-7952-4CA1-A7DD-5E57F90E8DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
