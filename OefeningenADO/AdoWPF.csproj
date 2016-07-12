@@ -110,12 +110,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdoGemeenschap\AdoGemeenschap.csproj">
-      <Project>{c5d018b9-7952-4ca1-a7dd-5e57f90e8dc1}</Project>
-      <Name>AdoGemeenschap</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
