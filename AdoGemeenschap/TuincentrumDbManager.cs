@@ -21,38 +21,60 @@ namespace AdoGemeenschap
             return conTuincentrum; 
         }
 
-        public Boolean LeverancierToevoegen(String naam, String adres, String postcode, String plaats)
+        public void LeverancierToevoegen(Leverancier eenLeverancier)
         {
             var dbManager = new TuincentrumDbManager();
+
             using (var conTuincentrum = dbManager.GetConnection())
             {
                 using (var comLeverancierToevoegen = conTuincentrum.CreateCommand())
                 {
-                    comLeverancierToevoegen.CommandType = CommandType.Text;
+                    comLeverancierToevoegen.CommandType = CommandType.StoredProcedure;
                     comLeverancierToevoegen.CommandText = "LeverancierToevoegen";
 
                     DbParameter parNaam = comLeverancierToevoegen.CreateParameter();
-                    parNaam.ParameterName = "@naam";
-                    parNaam.Value = naam;
+                    parNaam.ParameterName = "@Naam";
+                    parNaam.Value = eenLeverancier.Naam;
                     comLeverancierToevoegen.Parameters.Add(parNaam);
 
                     DbParameter parAdres = comLeverancierToevoegen.CreateParameter();
-                    parAdres.ParameterName = "@adres";
-                    parAdres.Value = adres;
+                    parAdres.ParameterName = "@Adres";
+                    parAdres.Value = eenLeverancier.Adres;
                     comLeverancierToevoegen.Parameters.Add(parAdres);
 
-                    DbParameter parPostcode = comLeverancierToevoegen.CreateParameter();
-                    parPostcode.ParameterName = "@postcode";
-                    parPostcode.Value = postcode;
-                    comLeverancierToevoegen.Parameters.Add(parPostcode);
+                    DbParameter parPostNr = comLeverancierToevoegen.CreateParameter();
+                    parPostNr.ParameterName = "@PostNr";
+                    parPostNr.Value = eenLeverancier.PostNr;
+                    comLeverancierToevoegen.Parameters.Add(parPostNr);
 
-                    DbParameter parPlaats = comLeverancierToevoegen.CreateParameter();
-                    parPlaats.ParameterName = "@plaats";
-                    parPlaats.Value = plaats;
-                    comLeverancierToevoegen.Parameters.Add(parPlaats);
+                    DbParameter parWoonPlaats = comLeverancierToevoegen.CreateParameter();
+                    parWoonPlaats.ParameterName = "@Woonplaats";
+                    parWoonPlaats.Value = eenLeverancier.Woonplaats;
+                    comLeverancierToevoegen.Parameters.Add(parWoonPlaats);
 
                     conTuincentrum.Open();
-                    return comLeverancierToevoegen.ExecuteNonQuery() != 0;
+                    comLeverancierToevoegen.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void EindejaarsKorting(decimal korting)
+        {
+            var dbManager = new TuincentrumDbManager();
+            using (var conTuincentrum = dbManager.GetConnection())
+            {
+                using (var comPrijzenVerlagen = conTuincentrum.CreateCommand())
+                {
+                    comPrijzenVerlagen.CommandType = CommandType.StoredProcedure;
+                    comPrijzenVerlagen.CommandText = "PrijzenVerlagen";
+
+                    DbParameter parKorting = comPrijzenVerlagen.CreateParameter();
+                    parKorting.ParameterName = "@Korting";
+                    parKorting.Value = 0.25m;
+                    comPrijzenVerlagen.Parameters.Add(parKorting);
+
+                    conTuincentrum.Open();
+                    comPrijzenVerlagen.ExecuteNonQuery();
                 }
             }
         }
