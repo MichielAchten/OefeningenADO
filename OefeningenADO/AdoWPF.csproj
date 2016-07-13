@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="WPFOpgave3.xaml.cs">
+      <DependentUpon>WPFOpgave3.xaml</DependentUpon>
+    </Compile>
     <Page Include="WPFOpgave2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,6 +84,10 @@
       <DependentUpon>WPFOpgave2.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WPFOpgave3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
