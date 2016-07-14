@@ -18,9 +18,9 @@ namespace OefeningenADO
     /// <summary>
     /// Interaction logic for WPFOpgave3.xaml
     /// </summary>
-    public partial class WPFOpgave3 : Window
+    public partial class WPFOpgave4 : Window
     {
-        public WPFOpgave3()
+        public WPFOpgave4()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace OefeningenADO
                 manager.LeverancierToevoegen(deLeverancier);
                 statusLabel.Content = "Nieuwe leverancier is toegevoegd";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 statusLabel.Content = ex.Message;
             }
@@ -55,6 +55,11 @@ namespace OefeningenADO
             {
                 statusLabel.Content = ex.Message;
             }
+        }
+
+        private void buttonVervangLeverancier_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -73,5 +73,12 @@ namespace AdoGemeenschap
                 }
             }
         }
+
+        public int VervangLeverancier(int oudeLevNr, int NieuweLevNr)
+        {
+            var dbManager = new TuincentrumDbManager();
+            //Hier verder afwerken
+            return 0;
+        }
     }
 }
