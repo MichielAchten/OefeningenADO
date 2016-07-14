@@ -58,23 +58,18 @@ namespace AdoGemeenschap
             }
         }
 
-        public void EindejaarsKorting(decimal korting)
+        public int EindejaarsKorting()
         {
             var dbManager = new TuincentrumDbManager();
             using (var conTuincentrum = dbManager.GetConnection())
             {
-                using (var comPrijzenVerlagen = conTuincentrum.CreateCommand())
+                using (var comEindejaarsKorting = conTuincentrum.CreateCommand())
                 {
-                    comPrijzenVerlagen.CommandType = CommandType.StoredProcedure;
-                    comPrijzenVerlagen.CommandText = "PrijzenVerlagen";
-
-                    DbParameter parKorting = comPrijzenVerlagen.CreateParameter();
-                    parKorting.ParameterName = "@Korting";
-                    parKorting.Value = 0.25m;
-                    comPrijzenVerlagen.Parameters.Add(parKorting);
+                    comEindejaarsKorting.CommandType = CommandType.StoredProcedure;
+                    comEindejaarsKorting.CommandText = "EindejaarsKorting";
 
                     conTuincentrum.Open();
-                    comPrijzenVerlagen.ExecuteNonQuery();
+                    return comEindejaarsKorting.ExecuteNonQuery();
                 }
             }
         }

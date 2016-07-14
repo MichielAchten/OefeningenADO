@@ -49,9 +49,7 @@ namespace OefeningenADO
             try
             {
                 var manager = new TuincentrumDbManager();
-                var deKorting = 0.25m;
-                manager.EindejaarsKorting(deKorting);
-                statusLabel.Content = "Prijzen zijn met 25% verlaagd";
+                statusLabel.Content = manager.EindejaarsKorting().ToString() + " plantenprijzen aangepast";
             }
             catch (Exception ex)
             {
