@@ -110,6 +110,7 @@ namespace AdoGemeenschap
                         comVerwijderen.Transaction = traVervangen;
                         comVerwijderen.CommandType = CommandType.StoredProcedure;
                         comVerwijderen.CommandText = "LeverancierVerwijderen";
+
                     }
                 }
             }
