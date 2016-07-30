@@ -18,7 +18,7 @@ namespace AdoGemeenschap
         {
             var conTuincentrum = factory.CreateConnection();
             conTuincentrum.ConnectionString = conTuincentrumSetting.ConnectionString;
-            return conTuincentrum; 
+            return conTuincentrum;
         }
 
         public void LeverancierToevoegen(Leverancier eenLeverancier)
@@ -74,9 +74,67 @@ namespace AdoGemeenschap
             }
         }
 
-        public int VervangLeverancier(int oudeLevNr, int NieuweLevNr)
+        public int VervangLeverancier(int oudeLevNr, int nieuweLevNr)
         {
-            var dbManager = new TuincentrumDbManager();
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                conTuin.Open();
+                using (var traVervangen = conTuin.BeginTransaction(IsolationLevel.ReadCommitted))
+                {
+                    using (var comWijzigen = conTuin.CreateCommand())
+                    {
+                        comWijzigen.Transaction = traVervangen;
+                        comWijzigen.CommandType = CommandType.StoredProcedure;
+                        comWijzigen.CommandText = "LeverancierWijzigen";
+
+                        var parOudeLevNr = comWijzigen.CreateParameter();
+                        parOudeLevNr.ParameterName = "@OudeLevNr";
+                        parOudeLevNr.Value = oudeLevNr;
+                        comWijzigen.Parameters.Add(parOudeLevNr);
+
+                        var parNieuweLevNr = comWijzigen.CreateParameter();
+                        parNieuweLevNr.ParameterName = "@NieuweLevNr";
+                        parNieuweLevNr.Value = nieuweLevNr;
+                        comWijzigen.Parameters.Add(parNieuweLevNr);
+                        if (comWijzigen.ExecuteNonQuery() == 0)
+                        {
+                            traVervangen.Rollback();
+                            throw new Exception("Leverancier " + oudeLevNr + 
+                                " kon niet vervangen worden door " + nieuweLevNr);
+
+                        }
+                    }
+                    using (var comVerwijderen = conTuin.CreateCommand())
+                    {
+                        comVerwijderen.Transaction = traVervangen;
+                        comVerwijderen.CommandType = CommandType.StoredProcedure;
+                        comVerwijderen.CommandText = "LeverancierVerwijderen";
+                    }
+                }
+            }
+
+
+            //using (var comVerwijderen = conTuin.CreateCommand()) (6)
+            //{
+            //comVerwijderen.Transaction = traVervangen;
+            //comVerwijderen.CommandType = CommandType.StoredProcedure;
+            //comVerwijderen.CommandText = "LeverancierVerwijderen";
+            //var parLevNr = comVerwijderen.CreateParameter();
+            //parLevNr.ParameterName = "@LevNr";
+            //parLevNr.Value = oudLevNr;
+            //comVerwijderen.Parameters.Add(parLevNr);
+            //if (comVerwijderen.ExecuteNonQuery() == 0)
+            //{
+            //traVervangen.Rollback();
+            //throw new Exception("Leverancier " + oudLevNr + " kon niet
+            //verwijderd worden");
+            //}
+            //traVervangen.Commit();
+
+
+
+
             //Hier verder afwerken
             return 0;
         }
