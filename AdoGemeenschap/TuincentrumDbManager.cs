@@ -102,37 +102,26 @@ namespace AdoGemeenschap
                             traVervangen.Rollback();
                             throw new Exception("Leverancier " + oudeLevNr + 
                                 " kon niet vervangen worden door " + nieuweLevNr);
-
                         }
                     }
                     using (var comVerwijderen = conTuin.CreateCommand())
                     {
                         comVerwijderen.Transaction = traVervangen;
                         comVerwijderen.CommandType = CommandType.StoredProcedure;
-                        comVerwijderen.CommandText = "LeverancierVerwijderen";
-
+                        comVerwijderen.CommandText = "LeveranciersVerwijderen";
+                        var parLevNr = comVerwijderen.CreateParameter();
+                        parLevNr.ParameterName = "@LevNr";
+                        parLevNr.Value = oudeLevNr;
+                        comVerwijderen.Parameters.Add(parLevNr);
+                        if (comVerwijderen.ExecuteNonQuery() == 0)
+                        {
+                            traVervangen.Rollback();
+                            throw new Exception("Leverancier " + oudeLevNr + " kon niet verwijderd worden");
+                        }
+                        traVervangen.Commit();
                     }
                 }
             }
-
-
-            //using (var comVerwijderen = conTuin.CreateCommand()) (6)
-            //{
-            //comVerwijderen.Transaction = traVervangen;
-            //comVerwijderen.CommandType = CommandType.StoredProcedure;
-            //comVerwijderen.CommandText = "LeverancierVerwijderen";
-            //var parLevNr = comVerwijderen.CreateParameter();
-            //parLevNr.ParameterName = "@LevNr";
-            //parLevNr.Value = oudLevNr;
-            //comVerwijderen.Parameters.Add(parLevNr);
-            //if (comVerwijderen.ExecuteNonQuery() == 0)
-            //{
-            //traVervangen.Rollback();
-            //throw new Exception("Leverancier " + oudLevNr + " kon niet
-            //verwijderd worden");
-            //}
-            //traVervangen.Commit();
-
 
 
 

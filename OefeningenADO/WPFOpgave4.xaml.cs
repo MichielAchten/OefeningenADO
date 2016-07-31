@@ -59,7 +59,16 @@ namespace OefeningenADO
 
         private void buttonVervangLeverancier_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                var manager = new TuincentrumDbManager();
+                manager.VervangLeverancier(2, 3);
+                statusLabel.Content = "Leverancier 2 is verwijderd en vervangen door 3";
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Content = ex.Message; 
+            }
         }
     }
 }
