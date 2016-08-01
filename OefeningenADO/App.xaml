@@ -1,7 +1,7 @@
 ﻿<Application x:Class="OefeningenADO.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="WPFOpgave4.xaml">
+             StartupUri="WPFOpgave5.xaml">
     <Application.Resources>
          
     </Application.Resources>
