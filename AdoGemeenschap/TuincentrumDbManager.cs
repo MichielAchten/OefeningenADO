@@ -153,6 +153,70 @@ namespace AdoGemeenschap
         }
 
 
+        public PlantGegevens PlantGegevensOpzoeken(int plantNr)
+        {
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comPlantGegevens = conTuin.CreateCommand())
+                {
+                    comPlantGegevens.CommandType = CommandType.StoredProcedure;
+                    comPlantGegevens.CommandText = "PlantenGegevens";
+
+                    var parPlantNr = comPlantGegevens.CreateParameter();
+                    parPlantNr.ParameterName = "@plantNr";
+                    parPlantNr.Value = plantNr;
+                    comPlantGegevens.Parameters.Add(parPlantNr);
+
+                    var parPlantNaam = comPlantGegevens.CreateParameter();
+                    parPlantNaam.ParameterName = "@plantnaam";
+                    parPlantNaam.DbType = DbType.String;
+                    parPlantNaam.Size = 30;
+                    parPlantNaam.Direction = ParameterDirection.Output;
+                    comPlantGegevens.Parameters.Add(parPlantNaam);
+
+                    var parSoort = comPlantGegevens.CreateParameter();
+                    parSoort.ParameterName = "@soort";
+                    parSoort.DbType = DbType.String;
+                    parSoort.Size = 10;
+                    parSoort.Direction = ParameterDirection.Output;
+                    comPlantGegevens.Parameters.Add(parSoort);
+
+                    var parLeverancier = comPlantGegevens.CreateParameter();
+                    parLeverancier.ParameterName = "@leverancier";
+                    parLeverancier.DbType = DbType.String;
+                    parLeverancier.Size = 30;
+                    parLeverancier.Direction = ParameterDirection.Output;
+                    comPlantGegevens.Parameters.Add(parLeverancier);
+
+                    var parKleur = comPlantGegevens.CreateParameter();
+                    parKleur.ParameterName = "@kleur";
+                    parKleur.DbType = DbType.String;
+                    parKleur.Size = 10;
+                    parKleur.Direction = ParameterDirection.Output;
+                    comPlantGegevens.Parameters.Add(parKleur);
+
+                    var parKostprijs = comPlantGegevens.CreateParameter();
+                    parKostprijs.ParameterName = "@kostprijs";
+                    parKostprijs.DbType = DbType.Currency;
+                    parKostprijs.Size = 10;
+                    parKostprijs.Direction = ParameterDirection.Output;
+                    comPlantGegevens.Parameters.Add(parKostprijs);
+
+                    conTuin.Open();
+                    comPlantGegevens.ExecuteNonQuery();
+                    if (parPlantNaam.Value.Equals(DBNull.Value))
+                    {
+                        throw new Exception("Plantgegevens niet gevonden");
+                    }
+                    return new PlantGegevens(parPlantNaam.Value.ToString(),
+                        parSoort.Value.ToString(), parLeverancier.Value.ToString(),
+                        parKleur.Value.ToString(), (Decimal)parKostprijs.Value);
+                }
+            }
+        }
+
+
 
     }
 }

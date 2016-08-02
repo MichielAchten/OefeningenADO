@@ -1,0 +1,32 @@
+﻿<Window x:Class="OefeningenADO.WPFOpgave6"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPFOpgave6" Height="350" Width="350">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+            <Label Content="Plantnummer:" Width="100" Margin="10 0 0 0"></Label>
+            <TextBox Name="TextBoxPlantNummer" Width="50" Margin="25 0 25 0"></TextBox>
+            <Button Name="buttonOpzoeken" Content="Opzoeken" Width="100" Click="buttonOpzoeken_Click"></Button>
+        </StackPanel>
+        <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+            <Label Content="Naam:" Width="150" Margin="10 0 0 0"></Label>
+            <Label Name="LabelNaam" Width="150" Margin="10 0 0 0"></Label>
+        </StackPanel>
+        <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+            <Label Content="Soort:" Width="150" Margin="10 0 0 0"></Label>
+            <Label Name="LabelSoort" Width="150" Margin="10 0 0 0"></Label>
+        </StackPanel>
+        <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+            <Label Content="Leverancier:" Width="150" Margin="10 0 0 0"></Label>
+            <Label Name="LabelLeverancier" Width="150" Margin="10 0 0 0"></Label>
+        </StackPanel>
+        <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+            <Label Content="Kleur:" Width="150" Margin="10 0 0 0"></Label>
+            <Label Name="LabelKleur" Width="150" Margin="10 0 0 0"></Label>
+        </StackPanel>
+        <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+            <Label Content="Kostprijs:" Width="150" Margin="10 0 0 0"></Label>
+            <Label Name="LabelKostprijs" Width="150" Margin="10 0 0 0"></Label>
+        </StackPanel>
+    </StackPanel>
+</Window>
