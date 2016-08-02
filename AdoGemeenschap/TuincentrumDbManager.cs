@@ -52,8 +52,14 @@ namespace AdoGemeenschap
                     parWoonPlaats.Value = eenLeverancier.Woonplaats;
                     comLeverancierToevoegen.Parameters.Add(parWoonPlaats);
 
-                    conTuincentrum.Open();
-                    comLeverancierToevoegen.ExecuteNonQuery();
+                    using (var comAutoNumber = conTuincentrum.CreateCommand())
+                    {
+                        comAutoNumber.CommandType = CommandType.StoredProcedure;
+                        comAutoNumber.CommandText = "AutoNumberOphalen";
+                        conTuincentrum.Open();
+                        comLeverancierToevoegen.ExecuteNonQuery();
+                        eenLeverancier.LevNr = Convert.ToInt32(comAutoNumber.ExecuteScalar());
+                    }
                 }
             }
         }
