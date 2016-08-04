@@ -1,0 +1,14 @@
+﻿<Window x:Class="OefeningenADO.WPFOpgave8"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPFOpgave8" Height="300" Width="300" Loaded="Window_Loaded">
+    <DockPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Width="120" Height="24" Margin="10 10 0 0" Content="Kies een soort:"></Label>
+                <ComboBox Name="comboBoxSoorten" Width="145" Height="24" Margin="10 10 0 0" SelectionChanged="comboBoxSoorten_SelectionChanged"></ComboBox>
+            </StackPanel>
+            <ListBox Name="listBoxPlanten" Height="215" Margin="10 10 10 10"></ListBox>
+        </StackPanel>
+    </DockPanel>
+</Window>

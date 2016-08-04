@@ -222,6 +222,57 @@ namespace AdoGemeenschap
             }
         }
 
+        public List<Soort> GetSoorten()
+        {
+            var soorten = new List<Soort>();
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comSoorten = conTuin.CreateCommand())
+                {
+                    comSoorten.CommandType = CommandType.Text;
+                    comSoorten.CommandText = "select SoortNr, soort from Soorten order by Soort";
+                    conTuin.Open();
+                    using (var rdrSoorten = comSoorten.ExecuteReader())
+                    {
+                        var soortPos = rdrSoorten.GetOrdinal("soort");
+                        var soortnrPos = rdrSoorten.GetOrdinal("soortnr");
+                        while (rdrSoorten.Read())
+                        {
+                            soorten.Add(new Soort(rdrSoorten.GetString(soortPos), rdrSoorten.GetInt32(soortnrPos)));
+                        }
+                    }
+                }
+            }
+            return soorten;
+        }
+
+        public List<string> GetPlanten(int soortnr)
+        {
+            var planten = new List<String>();
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comPlanten = conTuin.CreateCommand())
+                {
+                    comPlanten.CommandText = "Select naam from planten where soortnr=@soortnr order by naam";
+                    var parSoortNr = comPlanten.CreateParameter();
+                    parSoortNr.ParameterName = "@soortnr";
+                    parSoortNr.Value = soortnr;
+                    comPlanten.Parameters.Add(parSoortNr);
+                    conTuin.Open();
+                    using (var rdrPlanten = comPlanten.ExecuteReader())
+                    {
+                        while (rdrPlanten.Read())
+                        {
+                            planten.Add(rdrPlanten["naam"].ToString());
+                        }
+                    }
+                }
+            }
+            return planten;
+        }
+
 
 
     }
