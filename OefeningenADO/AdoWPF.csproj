@@ -71,6 +71,9 @@
     </ApplicationDefinition>
     <Compile Include="GetalGroterDanNul.cs" />
     <Compile Include="VeldMoetIngevuldZijn.cs" />
+    <Compile Include="WPFOpgave10.xaml.cs">
+      <DependentUpon>WPFOpgave10.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPFOpgave3.xaml.cs">
       <DependentUpon>WPFOpgave3.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,10 @@
     <Compile Include="WPFOpgave9.xaml.cs">
       <DependentUpon>WPFOpgave9.xaml</DependentUpon>
     </Compile>
+    <Page Include="WPFOpgave10.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPFOpgave2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +158,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\AdoGemeenschap.Leverancier.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

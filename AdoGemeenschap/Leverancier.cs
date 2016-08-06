@@ -8,6 +8,21 @@ namespace AdoGemeenschap
 {
     public class Leverancier
     {
+        public Leverancier(int nLevNr, string nNaam, string nAdres, string nPostNr, string nWoonplaats)
+        {
+            LevNr = nLevNr;
+            Naam = nNaam;
+            Adres = nAdres;
+            PostNr = nPostNr;
+            Woonplaats = nWoonplaats;
+            Changed = false;
+        }
+
+        public Leverancier()
+        {
+
+        }
+        
         private int levNrValue;
         private string naamValue;
         private string adresValue;
@@ -34,6 +49,7 @@ namespace AdoGemeenschap
             set
             {
                 naamValue = value;
+                Changed = true;
             }
         }
         public string Adres
@@ -45,6 +61,7 @@ namespace AdoGemeenschap
             set
             {
                 adresValue = value;
+                Changed = true;
             }
         }
         public string PostNr
@@ -56,6 +73,7 @@ namespace AdoGemeenschap
             set
             {
                 postNrValue = value;
+                Changed = true;
             }
         }
         public string Woonplaats
@@ -67,7 +85,10 @@ namespace AdoGemeenschap
             set
             {
                 woonplaatsValue = value;
+                Changed = true;
             }
         }
+
+        public bool Changed { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data.Common;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace AdoGemeenschap
 {
@@ -106,7 +107,7 @@ namespace AdoGemeenschap
                         if (comWijzigen.ExecuteNonQuery() == 0)
                         {
                             traVervangen.Rollback();
-                            throw new Exception("Leverancier " + oudeLevNr + 
+                            throw new Exception("Leverancier " + oudeLevNr +
                                 " kon niet vervangen worden door " + nieuweLevNr);
                         }
                     }
@@ -322,6 +323,173 @@ namespace AdoGemeenschap
                     }
                 }
             }
+        }
+
+        public ObservableCollection<Leverancier> GetLeveranciers()
+        {
+            ObservableCollection<Leverancier> leveranciers = new ObservableCollection<Leverancier>();
+            var manager = new TuincentrumDbManager();
+            using (var conPlanten = manager.GetConnection())
+            {
+                using (var comLeveranciers = conPlanten.CreateCommand())
+                {
+                    comLeveranciers.CommandType = CommandType.Text;
+                    comLeveranciers.CommandText = "select * from Leveranciers";
+                    conPlanten.Open();
+                    using (var rdrLeveranciers = comLeveranciers.ExecuteReader())
+                    {
+                        Int32 leverancierNrPos = rdrLeveranciers.GetOrdinal("LevNr");
+                        Int32 naamPos = rdrLeveranciers.GetOrdinal("Naam");
+                        Int32 adresPos = rdrLeveranciers.GetOrdinal("Adres");
+                        Int32 postcodePos = rdrLeveranciers.GetOrdinal("PostNr");
+                        Int32 gemeentePos = rdrLeveranciers.GetOrdinal("Woonplaats");
+                        while (rdrLeveranciers.Read())
+                        {
+                            leveranciers.Add(
+                            new Leverancier(rdrLeveranciers.GetInt32(leverancierNrPos),
+                            rdrLeveranciers.GetString(naamPos),
+                            rdrLeveranciers.GetString(adresPos),
+                            rdrLeveranciers.GetString(postcodePos),
+                            rdrLeveranciers.GetString(gemeentePos)));
+                        }
+                    }
+                }
+            }
+            return leveranciers;
+        }
+
+        public void SchrijfVerwijderingen(List<Leverancier> leveranciers)
+        {
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comDelete = conTuin.CreateCommand())
+                {
+                    comDelete.CommandType = CommandType.Text;
+                    comDelete.CommandText = "delete from leveranciers where LevNr=@levnr";
+
+                    var parLevnr = comDelete.CreateParameter();
+                    parLevnr.ParameterName = "@levnr";
+                    comDelete.Parameters.Add(parLevnr);
+
+                    conTuin.Open();
+                    foreach (Leverancier eenLeverancier in leveranciers)
+                    {
+                        parLevnr.Value = eenLeverancier.LevNr;
+                        comDelete.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public void SchrijfToevoegingen(List<Leverancier> leveranciers)
+        {
+            var manager = new TuincentrumDbManager();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comInsert = conTuin.CreateCommand())
+                {
+                    comInsert.CommandType = CommandType.Text;
+                    comInsert.CommandText = @"Insert into leveranciers (Naam,Adres,PostNr,Woonplaats)
+                        values (@naam,@adres,@postcode,@gemeente)";
+
+                    var parNaam = comInsert.CreateParameter();
+                    parNaam.ParameterName = "@naam";
+                    comInsert.Parameters.Add(parNaam);
+
+                    var parAdres = comInsert.CreateParameter();
+                    parAdres.ParameterName = "@adres";
+                    comInsert.Parameters.Add(parAdres);
+
+                    var parPostcode = comInsert.CreateParameter();
+                    parPostcode.ParameterName = "@postcode";
+                    comInsert.Parameters.Add(parPostcode);
+
+                    var parGemeente = comInsert.CreateParameter();
+                    parGemeente.ParameterName = "@gemeente";
+                    comInsert.Parameters.Add(parGemeente);
+
+                    conTuin.Open();
+                    foreach (Leverancier eenLeverancier in leveranciers)
+                    {
+                        parNaam.Value = eenLeverancier.Naam;
+                        parAdres.Value = eenLeverancier.Adres;
+                        parPostcode.Value = eenLeverancier.PostNr;
+                        parGemeente.Value = eenLeverancier.Woonplaats;
+                        comInsert.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public void SchrijfWijzigingen(List<Leverancier> leveranciers)
+        {
+            var manager = new TuincentrumDbManager();
+            using (var conLeveranciers = manager.GetConnection())
+            {
+                using (var comUpdate = conLeveranciers.CreateCommand())
+                {
+                    comUpdate.CommandType = CommandType.Text;
+                    comUpdate.CommandText = @"update leveranciers set Naam=@naam,Adres=@adres, PostNr=@postnr, 
+                        Woonplaats=@woonplaats where LevNr=@levnr";
+
+                    var parNaam = comUpdate.CreateParameter();
+                    parNaam.ParameterName = "@naam";
+                    comUpdate.Parameters.Add(parNaam);
+
+                    var parAdres = comUpdate.CreateParameter();
+                    parAdres.ParameterName = "@adres";
+                    comUpdate.Parameters.Add(parAdres);
+
+                    var parPostNr = comUpdate.CreateParameter();
+                    parPostNr.ParameterName = "@postnr";
+                    comUpdate.Parameters.Add(parPostNr);
+
+                    var parWoonplaats = comUpdate.CreateParameter();
+                    parWoonplaats.ParameterName = "@woonplaats";
+                    comUpdate.Parameters.Add(parWoonplaats);
+
+                    var parLevNr = comUpdate.CreateParameter();
+                    parLevNr.ParameterName = "@levnr";
+                    comUpdate.Parameters.Add(parLevNr);
+
+                    conLeveranciers.Open();
+                    foreach (var eenLeverancier in leveranciers)
+                    {
+                        parNaam.Value = eenLeverancier.Naam;
+                        parAdres.Value = eenLeverancier.Adres;
+                        parPostNr.Value = eenLeverancier.PostNr;
+                        parWoonplaats.Value = eenLeverancier.Woonplaats;
+                        parLevNr.Value = eenLeverancier.LevNr;
+                        comUpdate.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public List<String> GetPostnummers()
+        {
+            var manager = new TuincentrumDbManager();
+            List<string> postnummers = new List<string>();
+            using (var conTuin = manager.GetConnection())
+            {
+                using (var comPostnummers = conTuin.CreateCommand())
+                {
+                    comPostnummers.CommandType = CommandType.StoredProcedure;
+                    comPostnummers.CommandText = "PostNummers";
+                    conTuin.Open();
+
+                    using (var rdrPostnummers = comPostnummers.ExecuteReader())
+                    {
+                        Int32 postcodePos = rdrPostnummers.GetOrdinal("PostNr");
+                        while (rdrPostnummers.Read())
+                        {
+                            postnummers.Add(rdrPostnummers.GetString(postcodePos));
+                        }
+                    }
+                }
+            }
+            return postnummers;
         }
     }
 }
