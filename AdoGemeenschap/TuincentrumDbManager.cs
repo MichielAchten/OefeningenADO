@@ -247,15 +247,17 @@ namespace AdoGemeenschap
             return soorten;
         }
 
-        public List<string> GetPlanten(int soortnr)
+        public List<Plant> GetPlanten(int soortnr)
         {
-            var planten = new List<String>();
+            var planten = new List<Plant>();
             var manager = new TuincentrumDbManager();
             using (var conTuin = manager.GetConnection())
             {
                 using (var comPlanten = conTuin.CreateCommand())
                 {
-                    comPlanten.CommandText = "Select naam from planten where soortnr=@soortnr order by naam";
+                    comPlanten.CommandType = CommandType.Text;
+                    comPlanten.CommandText = "Select * from planten where soortnr=@soortnr order by naam";
+
                     var parSoortNr = comPlanten.CreateParameter();
                     parSoortNr.ParameterName = "@soortnr";
                     parSoortNr.Value = soortnr;
@@ -263,9 +265,21 @@ namespace AdoGemeenschap
                     conTuin.Open();
                     using (var rdrPlanten = comPlanten.ExecuteReader())
                     {
+                        var plantNaamPos = rdrPlanten.GetOrdinal("Naam");
+                        var plantNrPos = rdrPlanten.GetOrdinal("plantnr");
+                        var levnrPos = rdrPlanten.GetOrdinal("levnr");
+                        var prijsPos = rdrPlanten.GetOrdinal("verkoopprijs");
+                        var kleurPos = rdrPlanten.GetOrdinal("kleur");
+                        var soortPos = rdrPlanten.GetOrdinal("soortnr");
                         while (rdrPlanten.Read())
                         {
-                            planten.Add(rdrPlanten["naam"].ToString());
+                            var eenPlant = new Plant(
+                                rdrPlanten.GetString(plantNaamPos),
+                                rdrPlanten.GetInt32(plantNrPos),
+                                rdrPlanten.GetInt32(levnrPos),
+                                rdrPlanten.GetDecimal(prijsPos),
+                                rdrPlanten.GetString(kleurPos));
+                            planten.Add(eenPlant);
                         }
                     }
                 }
@@ -273,7 +287,41 @@ namespace AdoGemeenschap
             return planten;
         }
 
+        public void GewijzigdePlantenOpslaan(List<Plant> planten)
+        {
+            var manager = new TuincentrumDbManager();
+            using (var conPlant = manager.GetConnection())
+            {
+                using (var comUpdate = conPlant.CreateCommand())
+                {
+                    comUpdate.CommandType = CommandType.Text;
+                    comUpdate.CommandText = "update planten set Kleur=@kleur, VerkoopPrijs=@prijs where PlantNr=@plantenr";
 
+                    var parKleur = comUpdate.CreateParameter();
+                    parKleur.ParameterName = "@kleur";
+                    comUpdate.Parameters.Add(parKleur);
 
+                    var parPrijs = comUpdate.CreateParameter();
+                    parPrijs.ParameterName = "@prijs";
+                    comUpdate.Parameters.Add(parPrijs);
+
+                    var parPlantNr = comUpdate.CreateParameter();
+                    parPlantNr.ParameterName = "@plantnr";
+                    comUpdate.Parameters.Add(parPlantNr);
+
+                    conPlant.Open();
+                    foreach (Plant p in planten)
+                    {
+                        parKleur.Value = p.Kleur;
+                        parPrijs.Value = p.Prijs;
+                        parPlantNr.Value = p.PlantNr;
+                        if (comUpdate.ExecuteNonQuery() == 0)
+                        {
+                            throw new Exception(p.PlantNaam + " opslaan mislukt");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

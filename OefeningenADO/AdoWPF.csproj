@@ -69,6 +69,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GetalGroterDanNul.cs" />
+    <Compile Include="VeldMoetIngevuldZijn.cs" />
     <Compile Include="WPFOpgave3.xaml.cs">
       <DependentUpon>WPFOpgave3.xaml</DependentUpon>
     </Compile>
@@ -86,6 +88,9 @@
     </Compile>
     <Compile Include="WPFOpgave8.xaml.cs">
       <DependentUpon>WPFOpgave8.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPFOpgave9.xaml.cs">
+      <DependentUpon>WPFOpgave9.xaml</DependentUpon>
     </Compile>
     <Page Include="WPFOpgave2.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPFOpgave8.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFOpgave9.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
