@@ -8,7 +8,7 @@ namespace AdoGemeenschap
 {
     public class Leverancier
     {
-        public Leverancier(int nLevNr, string nNaam, string nAdres, string nPostNr, string nWoonplaats)
+        public Leverancier(int nLevNr, string nNaam, string nAdres, string nPostNr, string nWoonplaats, object nVersie)
         {
             LevNr = nLevNr;
             Naam = nNaam;
@@ -16,6 +16,7 @@ namespace AdoGemeenschap
             PostNr = nPostNr;
             Woonplaats = nWoonplaats;
             Changed = false;
+            Versie = nVersie;
         }
 
         public Leverancier()
@@ -28,6 +29,7 @@ namespace AdoGemeenschap
         private string adresValue;
         private string postNrValue;
         private string woonplaatsValue;
+        private object versieValue;
 
         public int LevNr
         {
@@ -90,5 +92,17 @@ namespace AdoGemeenschap
         }
 
         public bool Changed { get; set; }
+
+        public object Versie
+        {
+            get 
+            { 
+                return versieValue; 
+            }
+            set 
+            { 
+                versieValue = value; 
+            }
+        }
     }
 }

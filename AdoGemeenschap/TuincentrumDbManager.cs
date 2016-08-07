@@ -343,6 +343,7 @@ namespace AdoGemeenschap
                         Int32 adresPos = rdrLeveranciers.GetOrdinal("Adres");
                         Int32 postcodePos = rdrLeveranciers.GetOrdinal("PostNr");
                         Int32 gemeentePos = rdrLeveranciers.GetOrdinal("Woonplaats");
+                        var versiePos = rdrLeveranciers.GetOrdinal("Versie");
                         while (rdrLeveranciers.Read())
                         {
                             leveranciers.Add(
@@ -350,7 +351,8 @@ namespace AdoGemeenschap
                             rdrLeveranciers.GetString(naamPos),
                             rdrLeveranciers.GetString(adresPos),
                             rdrLeveranciers.GetString(postcodePos),
-                            rdrLeveranciers.GetString(gemeentePos)));
+                            rdrLeveranciers.GetString(gemeentePos),
+                            rdrLeveranciers.GetValue(versiePos)));
                         }
                     }
                 }
@@ -431,7 +433,7 @@ namespace AdoGemeenschap
                 {
                     comUpdate.CommandType = CommandType.Text;
                     comUpdate.CommandText = @"update leveranciers set Naam=@naam,Adres=@adres, PostNr=@postnr, 
-                        Woonplaats=@woonplaats where LevNr=@levnr";
+                        Woonplaats=@woonplaats where LevNr=@levnr and Versie=@versie";
 
                     var parNaam = comUpdate.CreateParameter();
                     parNaam.ParameterName = "@naam";
@@ -453,6 +455,10 @@ namespace AdoGemeenschap
                     parLevNr.ParameterName = "@levnr";
                     comUpdate.Parameters.Add(parLevNr);
 
+                    var parVersie = comUpdate.CreateParameter();
+                    parVersie.ParameterName = "@versie";
+                    comUpdate.Parameters.Add(parVersie);
+
                     conLeveranciers.Open();
                     foreach (var eenLeverancier in leveranciers)
                     {
@@ -461,7 +467,11 @@ namespace AdoGemeenschap
                         parPostNr.Value = eenLeverancier.PostNr;
                         parWoonplaats.Value = eenLeverancier.Woonplaats;
                         parLevNr.Value = eenLeverancier.LevNr;
-                        comUpdate.ExecuteNonQuery();
+                        parVersie.Value = eenLeverancier.Versie;
+                        if (comUpdate.ExecuteNonQuery() == 0)
+                        {
+                            throw new Exception("Iemand was je voor");
+                        }
                     }
                 }
             }
