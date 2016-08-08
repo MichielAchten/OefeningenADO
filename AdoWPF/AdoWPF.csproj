@@ -191,6 +191,16 @@
       <Name>AdoGemeenschap</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="StoredPocedures\dbo.AutoNumberOphalen.sql" />
+    <Content Include="StoredPocedures\dbo.EindejaarsKorting.sql" />
+    <Content Include="StoredPocedures\dbo.GemiddeldePrijsVanEenSoort.sql" />
+    <Content Include="StoredPocedures\dbo.LeverancierToevoegen.sql" />
+    <Content Include="StoredPocedures\dbo.LeverancierVerwijderen.sql" />
+    <Content Include="StoredPocedures\dbo.LeverancierWijzigen.sql" />
+    <Content Include="StoredPocedures\dbo.PlantenGegevens.sql" />
+    <Content Include="StoredPocedures\dbo.PostNummers.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
