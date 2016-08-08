@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoWPF", "OefeningenADO\AdoWPF.csproj", "{58BAEB20-521F-4254-8E57-254C275CA3E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoGemeenschap", "AdoGemeenschap\AdoGemeenschap.csproj", "{D712A15B-12FB-40AC-8BEB-CE80B955BADE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoWPF2", "AdoWPF2\AdoWPF2.csproj", "{B62BB727-B7DB-47F5-956E-DF7AAC6A9B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoWPF", "AdoWPF\AdoWPF.csproj", "{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58BAEB20-521F-4254-8E57-254C275CA3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D712A15B-12FB-40AC-8BEB-CE80B955BADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D712A15B-12FB-40AC-8BEB-CE80B955BADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D712A15B-12FB-40AC-8BEB-CE80B955BADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{B62BB727-B7DB-47F5-956E-DF7AAC6A9B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B62BB727-B7DB-47F5-956E-DF7AAC6A9B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B62BB727-B7DB-47F5-956E-DF7AAC6A9B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

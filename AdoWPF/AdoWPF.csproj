@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{58BAEB20-521F-4254-8E57-254C275CA3E1}</ProjectGuid>
+    <ProjectGuid>{2AFA5517-1FEB-467D-A8E4-D3D7536E4789}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OefeningenADO</RootNamespace>
